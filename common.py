@@ -1,4 +1,6 @@
+from datetime import timedelta
 from decimal import Decimal
+from timeit import default_timer
 
 km_to_mile_ratio = 0.62137119223
 
@@ -30,3 +32,13 @@ def ddiv(dividend, divisor) -> Decimal:
 
 def swap_list(lst: list, i: int, j: int):
     lst[i], lst[j] = lst[j], lst[i]
+
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = default_timer()
+        func(*args, **kwargs)
+        end = default_timer()
+        print(f'Time: {timedelta(seconds=end - start)}')
+
+    return wrapper
