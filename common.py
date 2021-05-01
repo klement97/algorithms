@@ -26,3 +26,7 @@ def ddiv(dividend, divisor) -> Decimal:
         raise ValueError('Missing required arguments')
 
     return Decimal(dividend) / Decimal(divisor)
+
+
+def swap_list(lst: list, i: int, j: int):
+    lst[i], lst[j] = lst[j], lst[i]
