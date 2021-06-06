@@ -45,19 +45,27 @@ Write an efficient algorithm for the following assumptions:
 N is an integer within the range [2..100,000];
 each element of array A is an integer within the range [−1,000..1,000].
 """
+from common import profile
 
 
-def split_into_two(array, index):
-    return array[:index], array[index:]
+def abs_diff(v1, v2):
+    return abs(v1 - v2)
 
 
+@profile
 def solution(a):
-    split_count = len(a) - 1
-    results = set()
+    index = 1
+    first_slice_sum = sum(a[:index])
+    second_slice_sum = sum(a[index:])
+    difference = abs_diff(first_slice_sum, second_slice_sum)
 
-    for i in range(1, split_count):
-        first_slice, second_slice = split_into_two(array=a, index=i)
-        result = abs(sum(first_slice) - sum(second_slice))
-        results.add(result)
+    for index in range(2, len(a)):
+        # Add the first element of the second slice
+        # to the first slice and subtract it from the second one.
+        item_to_move = a[index - 1]
+        first_slice_sum += item_to_move
+        second_slice_sum -= item_to_move
 
-    return min(results)
+        difference = min(difference, abs_diff(first_slice_sum, second_slice_sum))
+
+    return difference

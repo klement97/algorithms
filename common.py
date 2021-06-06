@@ -1,3 +1,4 @@
+import cProfile
 from datetime import timedelta
 from decimal import Decimal
 from timeit import default_timer
@@ -40,5 +41,20 @@ def timer(func):
         func(*args, **kwargs)
         end = default_timer()
         print(f'Time: {timedelta(seconds=end - start)}')
+
+    return wrapper
+
+
+def profile(func):
+    def wrapper(*args, **kwargs):
+        profiler = cProfile.Profile()
+        profiler.enable()
+
+        result = func(*args, **kwargs)
+
+        profiler.disable()
+        profiler.dump_stats(f"profile.pstat")
+
+        return result
 
     return wrapper
