@@ -38,9 +38,11 @@ def swap_list(lst: list, i: int, j: int):
 def timer(func):
     def wrapper(*args, **kwargs):
         start = default_timer()
-        func(*args, **kwargs)
+        result = func(*args, **kwargs)
         end = default_timer()
         print(f'Time: {timedelta(seconds=end - start)}')
+
+        return result
 
     return wrapper
 

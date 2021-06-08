@@ -1,7 +1,7 @@
 import math
 from decimal import Decimal
 
-from common import dsum, dprod, ddiv, km_to_mile_ratio
+from common import dsum, dprod, ddiv, km_to_mile_ratio, timer
 
 
 def is_even(number: int) -> bool:
@@ -126,32 +126,6 @@ def permutation(n: int, r: int) -> int:
     return factorial(n) // factorial(n - r)
 
 
-def fibonacci(n: int) -> list:
-    if n <= 0:
-        return []
-
-    if n <= 2:
-        return n * [1]
-
-    result = [1, 1]
-
-    for i in range(2, n):
-        result.append(result[i - 1] + result[i - 2])
-
-    return result
-
-
-def nth_fibonacci(index: int) -> int:
-    return fibonacci(index)[index - 1]
-
-
-def nth_fibonacci_recursive(n: int) -> int:
-    if n in [1, 2]:
-        return 1
-
-    return nth_fibonacci_recursive(n - 1) + nth_fibonacci_recursive(n - 2)
-
-
 def recursion_series_1(n: int) -> float:
     """
     Calculate the (n / (n + 1)) series.
@@ -180,3 +154,61 @@ def recursion_series_3(n: int) -> float:
         return 0
 
     return ((n ** 2 - 1) / (n ** 3 + 2)) + recursion_series_3(n - 1)
+
+
+def fibonacci(n: int) -> list:
+    if n <= 0:
+        return []
+
+    if n <= 2:
+        return n * [1]
+
+    result = [1, 1]
+
+    for i in range(2, n):
+        result.append(result[i - 1] + result[i - 2])
+
+    return result
+
+
+@timer
+def nth_fibonacci(index: int) -> int:
+    return fibonacci(index)[index - 1]
+
+
+def nth_fibonacci_recursive(n: int) -> int:
+    if n in [1, 2]:
+        return 1
+
+    return nth_fibonacci_recursive(n - 1) + nth_fibonacci_recursive(n - 2)
+
+
+def fib_memoization(n: int, lookup: dict) -> int:
+    if n in [0, 1]:
+        lookup[n] = n
+
+    if lookup.get(n) is None:
+        lookup[n] = fib_memoization(n - 1, lookup) + fib_memoization(n - 2, lookup)
+
+    return lookup[n]
+
+
+@timer
+def fib_tabulation(n):
+    lookup = {
+        0: 0,
+        1: 1
+    }
+
+    for i in range(2, n + 1):
+        lookup[i] = lookup[i - 1] + lookup[i - 2]
+
+    return lookup[n]
+
+
+@timer
+def main(n):
+    lookup = dict()
+    # print("Fibonacci Number is ", fib_memoization(n, lookup))
+    print("Fibonacci Number is ", fib_tabulation(n))
+    # print("Fibonacci Number is ", nth_fibonacci_recursive(n))
