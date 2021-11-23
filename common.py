@@ -1,6 +1,8 @@
 import cProfile
 from datetime import timedelta
 from decimal import Decimal
+from functools import wraps
+
 from timeit import default_timer
 
 km_to_mile_ratio = 0.62137119223
@@ -48,6 +50,7 @@ def timer(func):
 
 
 def profile(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         profiler = cProfile.Profile()
         profiler.enable()

@@ -40,3 +40,25 @@ Write an efficient algorithm for the following assumptions:
 N is an integer within the range [1..100,000];
 each element of array A is an integer that can have one of the following values: 0, 1.
 """
+
+DIRECTIONS = {
+    'east': 0,
+    'west': 1,
+}
+
+
+def solution(array):
+    pairs_count = 0
+    all_ones_count = len([1 for x in array if x == 1])
+    ones_passed = 0
+
+    for i, item in enumerate(array):
+        if item == DIRECTIONS['west']:
+            ones_passed += 1
+
+        else:
+            pairs_count += all_ones_count - ones_passed
+            if pairs_count > 1000000000:
+                return -1
+
+    return pairs_count
