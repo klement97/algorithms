@@ -38,6 +38,7 @@ def swap_list(lst: list, i: int, j: int):
 
 
 def timer(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         start = default_timer()
         result = func(*args, **kwargs)
