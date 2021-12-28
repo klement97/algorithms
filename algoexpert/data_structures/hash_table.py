@@ -7,7 +7,19 @@ class HashTable:
         self.__allocated_size = 0
 
     def __str__(self):
-        return self.buckets
+        return {
+            key: value
+            for bucket in self.buckets
+            for key, value in bucket
+        }
+
+    def __repr__(self):
+        _repr = {
+            key: value
+            for bucket in self.buckets
+            for key, value in bucket
+        }
+        return str(_repr)
 
     def __init_size(self, size):
         if size and size <= 0:
