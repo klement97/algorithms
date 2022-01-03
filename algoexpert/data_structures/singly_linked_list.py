@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 from algoexpert.data_structures.node import Node
 
@@ -28,6 +28,16 @@ class LinkedList:
 
         return last_node
 
+    def _get_last_two_nodes(self) -> tuple[Node, Optional[Node]]:
+        previous_node, last_node = self.head, None
+        node = self.head
+        while node.nxt is not None:
+            previous_node = node
+            last_node = node.nxt
+            node = node.nxt
+
+        return previous_node, last_node
+
     def append(self, data):
         new_node = Node(data)
         if self.head is None:
@@ -47,13 +57,7 @@ class LinkedList:
         if self.head is None:
             raise ValueError('Trying to pop on an empty list raises ValueError')
 
-        previous_node, last_node = self.head, None
-        node = self.head
-        while node.nxt is not None:
-            previous_node = node
-            last_node = node.nxt
-            node = node.nxt
-
+        previous_node, last_node = self._get_last_two_nodes()
         if last_node is None:
             # Only head is present, remove it.
             data = self.head.data
