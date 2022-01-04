@@ -1,5 +1,5 @@
 from unittest import TestCase
-from rotate_array import solution
+from codility.lesson2_arrays.rotate_array import solution
 
 
 class TestRotateArray(TestCase):

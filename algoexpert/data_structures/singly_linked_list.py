@@ -17,7 +17,7 @@ class LinkedList:
 
     def __repr__(self):
         return ''.join([
-            f'{node.data}' + (f' -> ' if node.nxt else '')
+            f'{node.value}' + (f' -> ' if node.nxt else '')
             for node in self
         ])
 
@@ -60,13 +60,13 @@ class LinkedList:
         previous_node, last_node = self._get_last_two_nodes()
         if last_node is None:
             # Only head is present, remove it.
-            data = self.head.data
+            data = self.head.value
             del self.head
             self.head = None
             return data
 
         else:
-            data = last_node.data
+            data = last_node.value
             del last_node
             previous_node.nxt = None
             return data
@@ -76,7 +76,7 @@ class LinkedList:
             raise ValueError('Trying to pop on an empty list raises ValueError')
 
         second_node = self.head.nxt
-        data = self.head.data
+        data = self.head.value
         del self.head
         self.head = second_node
 
