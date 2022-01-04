@@ -1,4 +1,10 @@
-class NodeNext:
+class NodePointer:
+    """
+    Descriptor class for NodePointer (next or previous).
+    Validates the following before setting a value:
+    - If the value is not None, it must be an instance of Node.
+    - If the Node and the NodePointer are the same.
+    """
 
     def __set_name__(self, owner, name):
         self.private_name = f'_{name}'
@@ -22,7 +28,7 @@ class NodeNext:
 
 
 class Node:
-    nxt = NodeNext()
+    nxt = NodePointer()
 
     def __init__(self, value, nxt=None):
         self.value = value
@@ -30,3 +36,11 @@ class Node:
 
     def __repr__(self):
         return str(self.value)
+
+
+class DNode(Node):
+    prev = NodePointer()
+
+    def __init__(self, value, nxt=None, prev=None):
+        super(DNode, self).__init__(value, nxt)
+        self.prev: DNode = prev

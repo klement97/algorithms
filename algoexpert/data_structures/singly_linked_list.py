@@ -11,7 +11,7 @@ class LinkedList:
 
     def __iter__(self):
         node = self.head
-        while node is not None:
+        while node:
             yield node
             node = node.nxt
 
